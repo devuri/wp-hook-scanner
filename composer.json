@@ -1,14 +1,17 @@
 {
-    "name": "devuri/dot-access",
-    "description": "A simple PHP library for accessing nested data using dot notation.",
-    "keywords": [
-        "dot-access",
-        "nested-data",
-        "dot-notation"
-    ],
+    "name": "devuri/wp-hook-scanner",
+    "description": "Scans PHP files for WordPress hooks and outputs a categorized report or JSON.",
     "type": "library",
     "license": "MIT",
-    "authors": [
+    "keywords": [
+        "wordpress",
+        "hooks",
+        "scanner",
+        "actions",
+        "filters",
+        "static-analysis"
+    ],
+	"authors": [
         {
             "name": "Uriel Wilson",
             "email": "support@urielwilson.com",
@@ -16,106 +19,65 @@
             "role": "Developer"
         }
     ],
-    "support": {
-        "source": "https://github.com/devuri/dot-access",
-        "issues": "https://github.com/devuri/dot-access/issues"
-    },
     "require": {
-        "php": "^7.4 || ^8.0",
-        "dflydev/dot-access-data": "^3.0"
+        "php": "^8.1"
+    },
+	"require-dev": {
+        "ergebnis/composer-normalize": "^2.42",
+        "phpstan/phpstan": "^1.10",
+        "symfony/var-dumper": "^5.4",
+        "phpunit/phpunit": "^10.0"
     },
     "autoload": {
         "psr-4": {
-            "Urisoft\\": "src/"
+            "WPHookScanner\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Urisoft\\Tests\\": "tests/"
+            "WPHookScanner\\Tests\\": "tests/"
         }
     },
-    "require-dev": {
-        "10up/phpcs-composer": "dev-master",
-        "phpstan/phpstan": "^1.8",
-        "phpstan/phpstan-strict-rules": "^1.3",
-        "phpunit/phpunit": "^9.5",
-        "vimeo/psalm": "^4.24 || ^5.0"
-    },
-    "scripts": {
-        "wpcs": "composer wpcs-lint",
-        "wpcs-all": "composer wpcs-lint-all",
-        "wpcs-lint": [
-            "composer install -q",
-            "phpcs -ns src"
-        ],
-        "wpcs-lint-all": [
-            "composer install -q",
-            "phpcs -s src"
-        ],
-        "wpcs-fix": [
-            "composer install -q",
-            "phpcbf src"
-        ],
-        "test": [
-            "composer install -q",
-            "vendor/bin/phpunit",
-            "composer no-dev -q"
-        ],
-        "test-covers": [
-            "@putenv XDEBUG_MODE=coverage",
-            "composer install -q",
-            "vendor/bin/phpunit --coverage-html coverage-report",
-            "composer no-dev -q"
-        ],
-        "lint": [
-            "composer install -q",
-            "composer audit",
-            "composer psalm-secure",
-            "composer psalm",
-            "composer phpstan",
-            "composer no-dev -q"
-        ],
-        "build": [
-            "composer install -q",
-            "composer validate --strict",
-            "composer show --tree",
-            "composer wpcs-lint",
-            "composer lint",
-            "composer install -q",
-            "composer lint",
-            "composer test",
-            "composer no-dev -q"
-        ],
-        "phpstan": "@php ./vendor/bin/phpstan analyse",
-        "psalm": "vendor/bin/psalm",
-        "psalm-secure": "vendor/bin/psalm --taint-analysis",
-        "psalm-info": "vendor/bin/psalm --show-info=true",
-        "psalm-fix-return": "vendor/bin/psalm --alter --issues=MissingReturnType",
-        "psalm-autofix": [
-            "composer install -q",
-            "vendor/bin/psalm --alter --issues=InvalidNullableReturnType,MismatchingDocblockReturnType,InvalidReturnType,InvalidFalsableReturnType,LessSpecificReturnType,MissingParamType"
-        ],
-        "codefix": [
-            "composer php-cs-fixer",
-            "composer no-dev -q"
-        ],
-        "php-cs-fixer": [
-            "composer require --dev friendsofphp/php-cs-fixer ^3.13 -q",
-            "vendor/bin/php-cs-fixer fix",
-            "composer remove --dev friendsofphp/php-cs-fixer -q",
-            "composer install --no-dev -q"
-        ],
-        "no-dev": "composer install --no-dev"
-    },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "allow-plugins": {
-            "johnpbloch/wordpress-core-installer": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
-    },
+    "bin": [
+        "bin/scan-hooks"
+    ],
+	"scripts": {
+		"scan": "php bin/scan-hooks",
+		"codefix": [
+			"composer php-cs-fixer",
+			"composer install --no-dev"
+		],
+		"php-cs-fixer": [
+			"composer require --dev friendsofphp/php-cs-fixer 3.23.0",
+			"vendor/bin/php-cs-fixer fix -vvv",
+			"composer remove --dev friendsofphp/php-cs-fixer",
+			"composer install --no-dev"
+		],
+		"phpstan": [
+			"composer install",
+			"@php ./vendor/bin/phpstan analyse"
+		],
+		"lint": [
+			"composer install -q",
+			"composer phpstan",
+			"composer install --no-dev -q"
+		],
+		"test": [
+			"composer install -q",
+			"vendor/bin/phpunit --testdox",
+			"composer install --no-dev -q"
+		],
+		"test-covers": [
+			"@putenv XDEBUG_MODE=coverage",
+			"composer install -q",
+			"vendor/bin/phpunit --coverage-html coverage-report"
+		]
+	},
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true
+        }
+    }
 }

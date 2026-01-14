@@ -1,9 +1,23 @@
-composer.phar
+# Dependencies
+/vendor/
 composer.lock
+
+# PHPUnit
+.phpunit.cache/
 .phpunit.result.cache
-/vendor
-/coverage-report
-/tmp
-/.github
-/.idea
-/.phpdoc/cache
+
+# IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.phar
+
+# Local testing
+.hooks-snapshot.json
