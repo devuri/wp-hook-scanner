@@ -11,7 +11,7 @@
         "filters",
         "static-analysis"
     ],
-	"authors": [
+    "authors": [
         {
             "name": "Uriel Wilson",
             "email": "support@urielwilson.com",
@@ -22,7 +22,7 @@
     "require": {
         "php": "^8.1"
     },
-	"require-dev": {
+    "require-dev": {
         "ergebnis/composer-normalize": "^2.42",
         "phpstan/phpstan": "^1.10",
         "symfony/var-dumper": "^5.4",
@@ -41,38 +41,38 @@
     "bin": [
         "bin/scan-hooks"
     ],
-	"scripts": {
-		"scan": "php bin/scan-hooks",
-		"codefix": [
-			"composer php-cs-fixer",
-			"composer install --no-dev"
-		],
-		"php-cs-fixer": [
-			"composer require --dev friendsofphp/php-cs-fixer 3.23.0",
-			"vendor/bin/php-cs-fixer fix -vvv",
-			"composer remove --dev friendsofphp/php-cs-fixer",
-			"composer install --no-dev"
-		],
-		"phpstan": [
-			"composer install",
-			"@php ./vendor/bin/phpstan analyse"
-		],
-		"lint": [
-			"composer install -q",
-			"composer phpstan",
-			"composer install --no-dev -q"
-		],
-		"test": [
-			"composer install -q",
-			"vendor/bin/phpunit --testdox",
-			"composer install --no-dev -q"
-		],
-		"test-covers": [
-			"@putenv XDEBUG_MODE=coverage",
-			"composer install -q",
-			"vendor/bin/phpunit --coverage-html coverage-report"
-		]
-	},
+    "scripts": {
+        "scan": "php bin/scan-hooks",
+        "codefix": [
+            "composer php-cs-fixer",
+            "composer install --no-dev"
+        ],
+        "php-cs-fixer": [
+            "composer require --dev friendsofphp/php-cs-fixer 3.23.0",
+            "vendor/bin/php-cs-fixer fix -vvv",
+            "composer remove --dev friendsofphp/php-cs-fixer",
+            "composer install --no-dev"
+        ],
+        "phpstan": [
+            "composer install",
+            "@php ./vendor/bin/phpstan analyse"
+        ],
+        "lint": [
+            "composer install -q",
+            "composer phpstan",
+            "composer install --no-dev -q"
+        ],
+        "test": [
+            "composer install -q",
+            "vendor/bin/phpunit --testdox",
+            "composer install --no-dev -q"
+        ],
+        "test-covers": [
+            "@putenv XDEBUG_MODE=coverage",
+            "composer install -q",
+            "vendor/bin/phpunit --coverage-html coverage-report"
+        ]
+    },
     "minimum-stability": "stable",
     "prefer-stable": true,
     "config": {
